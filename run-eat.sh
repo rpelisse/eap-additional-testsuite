@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# This scrips
+set -e
+
 usage() {
   local script_name=$(basename ${0})
 
@@ -11,6 +12,8 @@ usage() {
 
 readonly LOCAL_REPO_DIR=${1}
 readonly JBOSS_VERSION_CODE=${2}
+# SERVER_CODENAME matches prefix to jbossas's folder in dist/target, so jboss-eap or wildfly:
+readonly SERVER_CODENAME=${SERVER_CODENAME:-'wildfly'}
 
 if [ -z "${LOCAL_REPO_DIR}" ]; then
   echo "Missing LOCAL_REPO_DIR - please provide value to the local maven repo to use"
@@ -59,8 +62,7 @@ export JBOSS_VERSION="$(mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:eva
 mvn clean install -DskipTests -Dmaven.repo.local=../${LOCAL_REPO_DIR} -s ../settings.xml
 cd ..
 
-export JBOSS_FOLDER=${WILDFLY_CHECKOUT_FOLDER}/dist/target/wildfly-${JBOSS_VERSION}
-
+export JBOSS_FOLDER=${WILDFLY_CHECKOUT_FOLDER}/dist/target/${SERVER_CODENAME}-${JBOSS_VERSION}
 
 #
 # Run EAT
