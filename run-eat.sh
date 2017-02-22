@@ -27,6 +27,20 @@ if [ -z "${JBOSS_VERSION_CODE}" ]; then
   exit 2
 fi
 
+if [ -z "${MAVEN_HOME}" ]; then
+  echo "No MAVEN_HOME has been defined."
+  exit 3
+fi
+
+if [ ! -e "${MAVEN_HOME}" ]; then
+  echo "Provided MAVEN_HOME does not exist: ${MAVEN_HOME}"
+  exit 4
+fi
+
+if [ ! -d "${MAVEN_HOME}" ]; then
+  echo "Provided MAVEN_HOME is not a directory: ${MAVEN_HOME}"
+  exit 5
+fi
 
 #
 # Setting up maven
@@ -34,9 +48,7 @@ fi
 
 mkdir -p "${LOCAL_REPO_DIR}"
 
-readonly MAVEN_HOME=${MAVEN_HOME:-'/home/jboss/jenkins_workspace/tools/hudson.tasks.Maven_MavenInstallation/Maven_3.3.9'}
 export MAVEN_HOME
-
 export PATH="${MAVEN_HOME}/bin:${PATH}"
 
 export MAVEN_OPTS="${MAVEN_OPTS} -Dmaven.wagon.http.pool=false"
