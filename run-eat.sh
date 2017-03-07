@@ -77,7 +77,7 @@ export JBOSS_VERSION="$(mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:eva
 mvn clean install -DskipTests -Dmaven.repo.local=../${LOCAL_REPO_DIR} -s ../settings.xml
 cd ..
 
-export JBOSS_FOLDER=${WILDFLY_CHECKOUT_FOLDER}/dist/target/${SERVER_CODENAME}-${JBOSS_VERSION}
+export JBOSS_FOLDER=${JBOSS_FOLDER:-"${WILDFLY_CHECKOUT_FOLDER}/dist/target/${SERVER_CODENAME}-${JBOSS_VERSION}"}
 
 #
 # Run EAT
