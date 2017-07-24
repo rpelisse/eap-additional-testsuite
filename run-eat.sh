@@ -14,6 +14,7 @@ readonly LOCAL_REPO_DIR=${1}
 readonly JBOSS_VERSION_CODE=${2}
 # SERVER_CODENAME matches prefix to jbossas's folder in dist/target, so jboss-eap or wildfly:
 readonly SERVER_CODENAME=${SERVER_CODENAME:-'wildfly'}
+readonly SETTINGS_XML=${SETTINGS_XML:-"$(pwd)/settings.xml"}
 
 if [ -z "${LOCAL_REPO_DIR}" ]; then
   echo "Missing LOCAL_REPO_DIR - please provide value to the local maven repo to use"
@@ -40,6 +41,10 @@ fi
 if [ ! -d "${MAVEN_HOME}" ]; then
   echo "Provided MAVEN_HOME is not a directory: ${MAVEN_HOME}"
   exit 5
+fi
+
+if [ ! -z "${USE_SETTINGS_XML}" ]; then
+  readonly SETTINGS_XML_OPTION="-s ${SETTINGS_XML}"
 fi
 
 #
@@ -70,8 +75,8 @@ git clone "${WILDFLY_GIT_REPO}" --branch "${WILDFLY_BRANCH}" "${WILDFLY_CHECKOUT
 #
 
 cd "${WILDFLY_CHECKOUT_FOLDER}"
-export JBOSS_VERSION="$(mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version|grep -Ev '(^\[|Download\w+:)')"
-mvn clean install -DskipTests -Dmaven.repo.local=../${LOCAL_REPO_DIR} -s ../settings.xml
+export JBOSS_VERSION="$(mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version ${SETTINGS_XML_OPTION} | grep -Ev '(^\[|Download\w+:)')"
+mvn clean install -DskipTests -Dmaven.repo.local=../${LOCAL_REPO_DIR} ${SETTINGS_XML_OPTION}
 cd ..
 
 export JBOSS_FOLDER=${WILDFLY_CHECKOUT_FOLDER}/dist/target/${SERVER_CODENAME}-${JBOSS_VERSION}
@@ -82,4 +87,4 @@ export JBOSS_FOLDER=${WILDFLY_CHECKOUT_FOLDER}/dist/target/${SERVER_CODENAME}-${
 
 rm -r -f eap*  # remove previous build
 export MAVEN_OPTS="-Xmx1024m -Xms512m -XX:MaxPermSize=256m"
-mvn clean install -D${JBOSS_VERSION_CODE} -Dstandalone -Dmaven.repo.local=${LOCAL_REPO_DIR}
+mvn clean install -D${JBOSS_VERSION_CODE} -Dstandalone -Dmaven.repo.local=${LOCAL_REPO_DIR} ${SETTINGS_XML_OPTION}
