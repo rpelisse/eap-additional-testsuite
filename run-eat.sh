@@ -62,7 +62,7 @@ if [ -d "${MAVEN_LOCAL_REPOSITORY}" ]; then
 fi
 
 #readonly JBOSS_VERSION=${JBOSS_VERSION:-"$(basename "$(ls -d $(pwd)/dist/target/${NAME_PREFIX}-* | sed -e '/.jar/d')" | sed -e "s/${NAME_PREFIX}-//" | sed -e 's/-for-validation//')"}
-readonly JBOSS_VERSION=${JBOSS_VERSION:-$((mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version | grep -Ev '(^\[|Download\w+:)')}
+readonly JBOSS_VERSION=${JBOSS_VERSION:-$(mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version | grep -Ev '(^\[|Download\w+:)')}
 export JBOSS_VERSION
 readonly JBOSS_FOLDER=${JBOSS_FOLDER:-"$(pwd)/dist/target/${NAME_PREFIX}-${JBOSS_VERSION}"}
 export JBOSS_FOLDER
