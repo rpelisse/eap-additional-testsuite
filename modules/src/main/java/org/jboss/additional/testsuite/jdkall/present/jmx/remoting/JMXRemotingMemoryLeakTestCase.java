@@ -46,6 +46,11 @@ public class JMXRemotingMemoryLeakTestCase {
 
     @Test
     public void testJMXRemotingMemoryLeak() throws Exception {
+        for ( int i = 0; i < 10 ; i++ )
+            runTestCase();
+    }
+
+    public void runTestCase() throws Exception {
         final String address = managementClient.getMgmtAddress() + ":1234";
         String jmxUrl = "service:jmx:remote+http://" + address;
         log.info("Using jboss jmx remoting url: " + jmxUrl);
