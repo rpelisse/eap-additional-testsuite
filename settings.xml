@@ -21,6 +21,9 @@ under the License.
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <pluginGroups/>
+  <proxies/>
+  <servers/>
   <mirrors>
     <mirror>
       <id>maven.central.cache</id>
@@ -37,8 +40,8 @@ under the License.
     <mirror>
       <id>jboss-eap-7.1-product-repository</id>
       <mirrorOf>jboss-eap-7.1-product-repository</mirrorOf>
-      <name>Thunder Product EAP Cache</name>
-      <url>https://MAVEN_CACHE_SERVER/eap-7.1/</url>
+      <name>Thunder Product EAP 7.1 Cache</name>
+      <url>https://MAVEN_CACHE_SERVER/eap-7.1</url>
     </mirror>
     <mirror>
       <id>jboss-eap-7.0-product-repository</id>
@@ -53,4 +56,5 @@ under the License.
       <url>https://MAVEN_CACHE_SERVER/jboss</url>
     </mirror>
   </mirrors>
+  <profiles/>
 </settings>
