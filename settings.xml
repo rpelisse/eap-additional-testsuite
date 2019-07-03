@@ -29,6 +29,12 @@ under the License.
       <url>https://MAVEN_CACHE_SERVER/maven</url>
     </mirror>
     <mirror>
+      <id>brew.cache.eap72</id>
+      <mirrorOf>jboss-eap-7.2-product-repository</mirrorOf>
+      <name>Thunder Product EAP 7.2 Cache</name>
+      <url>https://MAVEN_CACHE_SERVER/eap-7.2</url>
+    </mirror>
+    <mirror>
       <id>jboss-eap-7.1-product-repository</id>
       <mirrorOf>jboss-eap-7.1-product-repository</mirrorOf>
       <name>Thunder Product EAP Cache</name>
